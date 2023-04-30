@@ -2,14 +2,28 @@
 """function unloack all"""
 
 def canUnlockAll(boxes):
-    n = len(boxes)
-    unlocked = [False] * n
-    unlocked[0] = True
+    """ A function that determines if all boxes can be opened """
 
-    for i in range(n):
-        if unlocked[i]:
-            for key in boxes[i]:
-                if key < n and not unlocked[key]:
-                    unlocked[key] = True
+    if boxes == 0:
+        return False
 
-    return all(unlocked)
+    if not isinstance(boxes, list):
+        return False
+
+    if len(boxes) == 0:
+        return False
+
+    check = [0]
+    list_ing = [i for i in range(len(boxes))]
+
+    for in_check in check:
+        for in_boxes in boxes[in_check]:
+            if in_boxes not in check and in_boxes in list_ing:
+                if in_boxes >= len(boxes):
+                    return False
+                check.append(in_boxes)
+
+    if len(check) == len(boxes):
+        return True
+    else:
+        return False
