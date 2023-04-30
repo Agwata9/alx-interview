@@ -1,29 +1,25 @@
-#!/usr/bin/env python3
-"""function unloack all"""
+#!/usr/bin/python3
+"""
+ Unlocked the boxes
+"""
+
 
 def canUnlockAll(boxes):
-    """ A function that determines if all boxes can be opened """
+    """
+        Look if the box is unlocked or not
+        Return true if is unlocked or false
+    """
 
-    if boxes == 0:
-        return False
+    # Look to the unlocked boxes
+    unlocked_box = [0]
+    for i in unlocked_box:
+        for j in boxes[i]:
+            if j < len(boxes):
+                if j not in unlocked_box:
+                    unlocked_box.append(j)
 
-    if not isinstance(boxes, list):
-        return False
-
-    if len(boxes) == 0:
-        return False
-
-    check = [0]
-    list_ing = [i for i in range(len(boxes))]
-
-    for in_check in check:
-        for in_boxes in boxes[in_check]:
-            if in_boxes not in check and in_boxes in list_ing:
-                if in_boxes >= len(boxes):
-                    return False
-                check.append(in_boxes)
-
-    if len(check) == len(boxes):
+    # Look the the length of the open box and all the boxes
+    if len(boxes) == len(unlocked_box):
         return True
     else:
         return False
