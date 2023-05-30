@@ -1,79 +1,56 @@
-#!/usr/bin/env python3
-"""
-N Queens
-"""
+#!/usr/bin/python3
 
-import sys
+'''
+N queens
+'''
 
-def is_safe(board, row, col):
-    # Check if there is a queen in the same column
-    for i in range(row):
-        if board[i][col] == 'Q':
+from sys import argv
+
+
+def is_NQueen(cell: list) -> bool:
+    '''
+    is n queen function
+    '''
+    row_number = len(cell) - 1
+    difference = 0
+    for index in range(0, row_number):
+        difference = cell[index] - cell[row_number]
+        if difference < 0:
+            difference *= -1
+        if difference == 0 or difference == row_number - index:
             return False
-
-    # Check if there is a queen in the upper left diagonal
-    i, j = row, col
-    while i >= 0 and j >= 0:
-        if board[i][j] == 'Q':
-            return False
-        i -= 1
-        j -= 1
-
-    # Check if there is a queen in the upper right diagonal
-    i, j = row, col
-    while i >= 0 and j < len(board):
-        if board[i][j] == 'Q':
-            return False
-        i -= 1
-        j += 1
-
     return True
 
-def solve_nqueens(n):
-    board = [['.' for _ in range(n)] for _ in range(n)]
-    solutions = []
-    backtrack(board, 0, solutions)
-    return solutions
 
-def backtrack(board, row, solutions):
-    if row == len(board):
-        # Found a valid solution, convert the board to a solution string
-        solution = [''.join(row) for row in board]
-        solutions.append(solution)
-        return
+def solve_NQeens(dimension: int, row: int, cell: list, outcome: list):
+    """
+    Return result of N Queens
+    """
+    # Base case
+    if row == dimension:
+        print(outcome)
+    else:
+        for col in range(0, dimension):
+            cell.append(col)
+            outcome.append([row, col])
+            if (is_NQueen(cell)):
+                solve_NQeens(dimension, row + 1, cell, outcome)
+            cell.pop()
+            outcome.pop()
 
-    for col in range(len(board)):
-        if is_safe(board, row, col):
-            # Place a queen and proceed to the next row
-            board[row][col] = 'Q'
-            backtrack(board, row + 1, solutions)
-            # Remove the queen for backtracking
-            board[row][col] = '.'
 
-def print_solutions(solutions):
-    for solution in solutions:
-        for row in solution:
-            print(row)
-        print()
-
-def main():
-    if len(sys.argv) != 2:
-        print("Usage: nqueens N")
-        sys.exit(1)
-
-    try:
-        n = int(sys.argv[1])
-    except ValueError:
-        print("N must be a number")
-        sys.exit(1)
-
-    if n < 4:
-        print("N must be at least 4")
-        sys.exit(1)
-
-    solutions = solve_nqueens(n)
-    print_solutions(solutions)
-
-if __name__ == '__main__':
-    main()
-
+if len(argv) != 2:
+    print('Usage: nqueens N')
+    exit(1)
+try:
+    N = int(argv[1])
+except BaseException:
+    print('N must be a number')
+    exit(1)
+if N < 4:
+    print('N must be at least 4')
+    exit(1)
+else:
+    outcome = []
+    cell = 0
+    solve_NQeens(int(N), cell, [], outcome)
